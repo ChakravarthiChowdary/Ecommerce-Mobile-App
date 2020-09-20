@@ -7,7 +7,7 @@ This is built using React-Native, React Hooks and Redux.
 
 <img src="https://github.com/ChakravarthiChowdary/Ecommerce-Mobile-App/blob/master/assets/images/mobile-app2.png" width="300" height="600" />
 
-<img  src="https://github.com/ChakravarthiChowdary/Ecommerce-Mobile-App/blob/master/assets/images/mobile-app3.png" width="300" height="600" />
+<img align="left" src="https://github.com/ChakravarthiChowdary/Ecommerce-Mobile-App/blob/master/assets/images/mobile-app3.png" width="300" height="600" />
 
 <img  src="https://github.com/ChakravarthiChowdary/Ecommerce-Mobile-App/blob/master/assets/images/mobile-app4.png" width="300" height="600" />
 
