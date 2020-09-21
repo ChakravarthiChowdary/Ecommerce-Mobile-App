@@ -22,7 +22,7 @@ const OrdersScreen = ({ route, navigation }) => {
   }, [dispatch]);
 
   if (loading) {
-    return <Loading />;
+    return <Loading size={32} />;
   }
 
   const tryAgainClickedHandler = () => {

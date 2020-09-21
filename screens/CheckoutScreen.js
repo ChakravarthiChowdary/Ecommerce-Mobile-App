@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Keyboard,
   Picker,
@@ -16,12 +16,16 @@ import { colors } from "../constants/Colors";
 import Text from "../components/Text";
 import Loading from "../components/Loading";
 import { checkOutCart } from "../store/actions/cartActions";
+import { Checkbox } from "react-native-paper";
 const image = require("../assets/images/signin.jpg");
 
 const CheckoutScreen = ({ route, navigation }) => {
   const dispatch = useDispatch();
+  //redux state
   const orderError = useSelector((state) => state.orders.error);
   const loading = useSelector((state) => state.orders.loading);
+  const userData = useSelector((state) => state.auth.userData);
+  //component level state
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [age, setAge] = useState("");
@@ -29,6 +33,7 @@ const CheckoutScreen = ({ route, navigation }) => {
   const [phone, setPhone] = useState("");
   const [alternativePhone, setAlternativePhone] = useState("");
   const [addressMode, setAddressMode] = useState("home");
+  const [defaultChecked, setDefaultChecked] = useState(false);
 
   const [error, setError] = useState(null);
 
@@ -79,7 +84,9 @@ const CheckoutScreen = ({ route, navigation }) => {
       phone !== "" ||
       alternativePhone !== ""
     ) {
-      if (phone !== alternativePhone) {
+      if (phone.length < 10 || alternativePhone.length < 10) {
+        setError("Invalid phone number");
+      } else if (phone !== alternativePhone) {
         const orderDetails = {
           firstname: firstname,
           lastname: lastname,
@@ -111,6 +118,25 @@ const CheckoutScreen = ({ route, navigation }) => {
       setError("Mandatory fields cannot be left blank!");
     }
   };
+
+  useEffect(() => {
+    setError(null);
+    if (defaultChecked) {
+      setFirstname(userData.firstname);
+      setLastname(userData.lastname);
+      setAge(userData.age);
+      setAddress(userData.address);
+      setPhone(userData.phone);
+      setAlternativePhone(userData.alternatephone);
+    } else {
+      setFirstname("");
+      setLastname("");
+      setAge("");
+      setAddress("");
+      setPhone("");
+      setAlternativePhone("");
+    }
+  }, [defaultChecked]);
 
   return (
     <ImageBackground source={image} style={styles.image}>
@@ -198,11 +224,21 @@ const CheckoutScreen = ({ route, navigation }) => {
                 />
               </View>
             </View>
-            <View style={{ marginHorizontal: 10, marginBottom: 10 }}>
+            <View style={{ marginHorizontal: 10 }}>
               {error ? (
                 <Text style={{ color: "#fff", fontSize: 15 }}>* {error}</Text>
               ) : null}
             </View>
+
+            <Checkbox.Item
+              label="Use default address"
+              labelStyle={{ fontFamily: "RobotoRegular", color: "#fff" }}
+              color="#fff"
+              onPress={() => setDefaultChecked((prevState) => !prevState)}
+              status={defaultChecked ? "checked" : "unchecked"}
+              uncheckedColor="#fff"
+            />
+
             <View style={styles.checkoutButtonView}>
               <View style={{ width: "45%" }}>
                 <Button

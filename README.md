@@ -1,6 +1,6 @@
 # Basic-Mobile-App
 
-This is a E-Commerce mobile application which includes all the necessary features of a E-Commerse application.
+This is a E-Commerce mobile application which includes all the necessary features of an E-Commerse application.
 This is built using React-Native, React Hooks and Redux.
 
 <img align="left" src="https://github.com/ChakravarthiChowdary/Ecommerce-Mobile-App/blob/master/assets/images/mobile-app1.png" width="300" height="600" />

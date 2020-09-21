@@ -6,8 +6,9 @@ import {
   TouchableWithoutFeedback,
   ImageBackground,
   View,
+  ActivityIndicator,
 } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Text from "../components/Text";
 import TextInput from "../components/TextInput";
@@ -17,6 +18,9 @@ const image = require("../assets/images/signin.jpg");
 
 const SignupScreen = ({ navigation }) => {
   const dispatch = useDispatch();
+  //redux state
+  const loading = useSelector((state) => state.auth.loading);
+  //component level state
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [age, setAge] = useState("");
@@ -78,7 +82,9 @@ const SignupScreen = ({ navigation }) => {
       password !== "" ||
       confirmpass !== ""
     ) {
-      if (phone === alterphone) {
+      if (phone.length < 10 || alterphone.length < 10) {
+        setError("Invalid Phone number");
+      } else if (phone === alterphone) {
         setError("Two phone numbers cannot be same");
         return;
       } else if (password !== confirmpass) {
@@ -240,11 +246,15 @@ const SignupScreen = ({ navigation }) => {
                     color={colors.secondary}
                     onPress={() => navigation.goBack()}
                   />
-                  <Button
-                    title="Sign up"
-                    color={colors.primary}
-                    onPress={signupClickedHandler}
-                  />
+                  {loading ? (
+                    <ActivityIndicator />
+                  ) : (
+                    <Button
+                      title="Sign up"
+                      color={colors.primary}
+                      onPress={signupClickedHandler}
+                    />
+                  )}
                 </View>
               </View>
             </View>
