@@ -1,14 +1,15 @@
-import React, { useEffect } from "react";
-import { View, FlatList, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, FlatList, StyleSheet, SafeAreaView } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useDispatch, useSelector } from "react-redux";
+import { Searchbar } from "react-native-paper";
 
 import HeaderButton from "../components/HeaderButton";
 import { getProducts } from "../store/actions/productsActions";
 import Product from "../components/Product";
 import { autoSignIn, logOut } from "../store/actions/authActions";
 import Loading from "../components/Loading";
-import Text from "../components/Text";
+import { colors } from "../constants/Colors";
 
 const HomeScreen = ({ route, navigation }) => {
   const dispatch = useDispatch();
@@ -21,6 +22,9 @@ const HomeScreen = ({ route, navigation }) => {
       ? state.auth.userData.firstname
       : "Guest! Please Sign In"
   );
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const onChangeSearch = (query) => setSearchQuery(query);
 
   const logoutFunc = async () => {
     await dispatch(logOut());
@@ -73,15 +77,25 @@ const HomeScreen = ({ route, navigation }) => {
   if (loading) {
     return <Loading size={32} />;
   }
+
+  const filteredProducts = products.filter((product) => {
+    return product.title.toLowerCase().includes(searchQuery.toLowerCase());
+  });
+
   return (
     <View>
-      {/* <View style={styles.homeWelcomeView}>
-        <Text
-          style={{ fontFamily: "RobotoBold" }}
-        >{`Welcome ${userName}`}</Text>
-      </View> */}
+      <View style={styles.homeSeachBar}>
+        <Searchbar
+          placeholder="Search"
+          onChangeText={onChangeSearch}
+          value={searchQuery}
+          iconColor={colors.primary}
+        />
+      </View>
+
       <FlatList
-        data={products}
+        data={filteredProducts}
+        contentContainerStyle={{ paddingBottom: 50 }}
         renderItem={(itemData) => (
           <Product
             item={itemData.item}
@@ -101,6 +115,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 10,
   },
+  homeSeachBar: { margin: 10 },
 });
 
 export const homeScreenOptions = (navData) => {

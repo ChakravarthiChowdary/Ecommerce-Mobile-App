@@ -53,6 +53,7 @@ const OrdersScreen = ({ route, navigation }) => {
     <List.Section title="Your Orders">
       <FlatList
         data={orders}
+        contentContainerStyle={{ paddingBottom: 50 }}
         keyExtractor={(item) => item.id.toString()}
         renderItem={(itemData) => <OrderItem order={itemData.item} />}
       />

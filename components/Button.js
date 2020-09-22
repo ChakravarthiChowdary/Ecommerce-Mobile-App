@@ -1,4 +1,3 @@
-import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -6,7 +5,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { colors } from "../constants/Colors";
 import Text from "./Text";
 
-const ButtonComponent = ({ style, title, color, onPress, iconComponent }) => {
+const ButtonComponent = ({ style, title, onPress, iconComponent }) => {
   return (
     <TouchableOpacity style={{ ...styles.buttonStyle }} onPress={onPress}>
       <View style={{ ...styles.buttonView }}>

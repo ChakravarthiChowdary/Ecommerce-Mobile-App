@@ -1,8 +1,12 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
 
-const TextComponent = ({ style, children }) => {
-  return <Text style={{ ...styles.textStyle, ...style }}>{children}</Text>;
+const TextComponent = ({ style, children, onPress }) => {
+  return (
+    <Text style={{ ...styles.textStyle, ...style }} onPress={onPress}>
+      {children}
+    </Text>
+  );
 };
 
 const styles = StyleSheet.create({

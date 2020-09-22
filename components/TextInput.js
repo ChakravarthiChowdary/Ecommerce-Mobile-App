@@ -12,6 +12,7 @@ const TextInputComp = ({
   placeholderColor,
   keyboardType,
   multiline,
+  editable,
 }) => {
   return (
     <TextInput
@@ -23,6 +24,7 @@ const TextInputComp = ({
       value={text}
       keyboardType={keyboardType}
       onChangeText={textChangedHandler}
+      editable={editable}
     />
   );
 };

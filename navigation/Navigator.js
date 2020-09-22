@@ -8,19 +8,18 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 
 import { colors } from "../constants/Colors";
-import HomeScreen from "../screens/HomeScreen";
-import { homeScreenOptions } from "../screens/HomeScreen";
-import OrdersScreen from "../screens/OrdersScreen";
-import { ordersScreenOptions } from "../screens/OrdersScreen";
-import AuthScreen from "../screens/AuthScreen";
-import { authScreenOptions } from "../screens/AuthScreen";
+import HomeScreen, { homeScreenOptions } from "../screens/HomeScreen";
+import OrdersScreen, { ordersScreenOptions } from "../screens/OrdersScreen";
+import AuthScreen, { authScreenOptions } from "../screens/AuthScreen";
 import { Button, View } from "react-native";
-import CartScreen from "../screens/CartScreen";
-import { cartScreenOptions } from "../screens/CartScreen";
-import SignupScreen from "../screens/SignupScreen";
-import { signupScreenOptions } from "../screens/SignupScreen";
+import CartScreen, { cartScreenOptions } from "../screens/CartScreen";
+import SignupScreen, { signupScreenOptions } from "../screens/SignupScreen";
 import FavouritesScreen from "../screens/FavouritesScreen";
 import CheckoutScreen from "../screens/CheckoutScreen";
+import ProfileScreen, { profileScreenOptions } from "../screens/ProfileScreen";
+import ChangePassScreen, {
+  changePassScreenOptions,
+} from "../screens/ChangePassScreen";
 
 const defaultNavigationOptions = {
   headerTintColor: "#fff",
@@ -52,6 +51,18 @@ const orderDrawerNavOptions = ({ navigation }) => {
     drawerLabel: "Orders",
   };
 };
+
+const profileDrawerNavOptions = ({ navigation }) => {
+  let color = "#000";
+  if (navigation.isFocused()) {
+    color = "#fff";
+  }
+  return {
+    drawerIcon: () => <Ionicons name="md-person" size={23} color={color} />,
+    drawerLabel: "My Profile",
+  };
+};
+
 const Stack = createStackNavigator();
 
 export const StackNavigator = ({ token }) => {
@@ -116,6 +127,25 @@ const orderStackNavigator = () => {
   );
 };
 
+const ProfileStack = createStackNavigator();
+
+const profileStackNavigator = () => {
+  return (
+    <ProfileStack.Navigator screenOptions={defaultNavigationOptions}>
+      <ProfileStack.Screen
+        name="profile"
+        component={ProfileScreen}
+        options={profileScreenOptions}
+      />
+      <ProfileStack.Screen
+        name="changepassword"
+        component={ChangePassScreen}
+        options={changePassScreenOptions}
+      />
+    </ProfileStack.Navigator>
+  );
+};
+
 const Drawer = createDrawerNavigator();
 
 const drawerContent = (props, token) => {
@@ -164,15 +194,22 @@ export const DrawerNavigator = ({ token }) => {
       }}
       drawerType="slide"
     >
-      <Drawer.Screen name="drawerhome" options={homeDrawerNavOptions}>
+      <Drawer.Screen name="HomeStack" options={homeDrawerNavOptions}>
         {() => <StackNavigator token={token} />}
       </Drawer.Screen>
       {token && (
-        <Drawer.Screen
-          name="OrdersStack"
-          component={orderStackNavigator}
-          options={orderDrawerNavOptions}
-        />
+        <Fragment>
+          <Drawer.Screen
+            name="OrdersStack"
+            component={orderStackNavigator}
+            options={orderDrawerNavOptions}
+          />
+          <Drawer.Screen
+            name="ProfileStack"
+            component={profileStackNavigator}
+            options={profileDrawerNavOptions}
+          />
+        </Fragment>
       )}
     </Drawer.Navigator>
   );

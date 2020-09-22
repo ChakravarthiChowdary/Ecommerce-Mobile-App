@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Product from "../components/Product";
 import Loading from "../components/Loading";
-import Text from "../components/Text";
 import { getFavouriteProducts } from "../store/actions/productsActions";
 import NoProducts from "../components/NoProducts";
 

@@ -84,12 +84,10 @@ const Product = ({ item, userId, navigation }) => {
         style={styles.image}
       />
       <View style={styles.innerView}>
-        <Text style={{ fontSize: 16, fontFamily: "RobotoBold" }}>
-          {item.title}
-        </Text>
+        <Text style={styles.productText}>{item.title}</Text>
         <View style={styles.price}>
           <Text style={styles.mrp}>MRP :₹{item.mrp}/-</Text>
-          <Text style={{ fontSize: 16, fontFamily: "RobotoBold" }}>
+          <Text style={styles.productText}>
             Our Price :₹{item.sellingprice}/-
           </Text>
         </View>
@@ -156,6 +154,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     marginVertical: 10,
   },
+  productText: { fontSize: 16, fontFamily: "RobotoBold" },
 });
 
 export default Product;

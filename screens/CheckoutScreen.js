@@ -14,7 +14,6 @@ import { useDispatch, useSelector } from "react-redux";
 import TextInput from "../components/TextInput";
 import { colors } from "../constants/Colors";
 import Text from "../components/Text";
-import Loading from "../components/Loading";
 import { checkOutCart } from "../store/actions/cartActions";
 import { Checkbox } from "react-native-paper";
 const image = require("../assets/images/signin.jpg");
@@ -54,18 +53,14 @@ const CheckoutScreen = ({ route, navigation }) => {
         setAge(inputText.toString());
       }
     } else if (field === "pnum") {
-      if (text !== "") inputText = parseInt(text, 10);
-      else inputText = "";
-      if (inputText > 9999999999) {
+      if (inputText.length > 10) {
         inputText = "";
         setPhone(inputText.toString());
       } else {
         setPhone(inputText.toString());
       }
     } else if (field === "anum") {
-      if (text !== "") inputText = parseInt(text, 10);
-      else inputText = "";
-      if (inputText > 9999999999) {
+      if (inputText.length > 10) {
         inputText = "";
         setAlternativePhone(inputText.toString());
       } else {

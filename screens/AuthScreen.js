@@ -38,7 +38,7 @@ const AuthScreen = () => {
   return (
     <ImageBackground source={image} style={styles.image}>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View style={{ height: "100%", backgroundColor: "rgba(0,0,0,0.6)" }}>
+        <View style={styles.authBackgroundGradient}>
           <View style={styles.authInnerView}>
             <Text style={styles.authText}>Verify Yourself</Text>
             <View style={styles.authContainerView}>
@@ -103,6 +103,10 @@ const styles = StyleSheet.create({
     height: "100%",
     margin: 10,
     alignItems: "center",
+  },
+  authBackgroundGradient: {
+    height: "100%",
+    backgroundColor: "rgba(0,0,0,0.6)",
   },
   authContainerView: {
     width: "100%",

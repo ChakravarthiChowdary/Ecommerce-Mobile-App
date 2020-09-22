@@ -9,12 +9,14 @@ import authReducer from "./store/reducers/authReducer";
 import cartReducer from "./store/reducers/cartReducer";
 import ordersReducer from "./store/reducers/ordersReducer";
 import productReducer from "./store/reducers/productsReducer";
+import profileUpdateReducer from "./store/reducers/profileUpdateReducer";
 
 const rootReducer = combineReducers({
   products: productReducer,
   auth: authReducer,
   cart: cartReducer,
   orders: ordersReducer,
+  profile: profileUpdateReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

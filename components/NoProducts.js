@@ -7,9 +7,7 @@ import { colors } from "../constants/Colors";
 const NoProducts = ({ message, style, navigation, route }) => {
   return (
     <View style={{ ...styles.NoProductsView, ...style }}>
-      <Text style={{ fontFamily: "RobotoBold", marginVertical: 10 }}>
-        {message}
-      </Text>
+      <Text style={styles.NoProductsText}>{message}</Text>
       <Button
         title="Add Some"
         color={colors.secondary}
@@ -24,6 +22,10 @@ const styles = StyleSheet.create({
     height: "90%",
     justifyContent: "center",
     alignItems: "center",
+  },
+  NoProductsText: {
+    fontFamily: "RobotoBold",
+    marginVertical: 10,
   },
 });
 

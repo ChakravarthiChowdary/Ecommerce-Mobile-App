@@ -25,8 +25,12 @@ export const signInUser = (authInfo) => {
       if (!authRes.error) {
         dispatch({ type: SIGNIN_SUCCESS, payload: authRes });
         dispatch(getUser(authRes.localId));
+        const expirationDate = new Date(
+          new Date().getTime() + authRes.expiresIn * 1000
+        );
         await AsyncStorage.setItem("userId", authRes.localId);
         await AsyncStorage.setItem("tokenId", authRes.idToken);
+        await AsyncStorage.setItem("expirationDate", expirationDate.toString());
       } else dispatch({ type: SIGNIN_FAIL, payload: authRes.error });
     } catch (error) {
       dispatch({ type: SIGNIN_FAIL, payload: error });
@@ -39,10 +43,19 @@ export const autoSignIn = () => {
     try {
       const tokenId = await AsyncStorage.getItem("tokenId");
       const userId = await AsyncStorage.getItem("userId");
-      let userData = await AsyncStorage.getItem("userInfo");
-      userData = JSON.parse(userData);
-      await dispatch({ type: AUTO_LOGIN, payload: { tokenId, userId } });
-      await dispatch({ type: ADD_USER_SUCCESS, payload: userData });
+      let expirationDate = await AsyncStorage.getItem("expirationDate");
+      expirationDate = new Date(expirationDate);
+
+      const currentDate = new Date();
+
+      if (expirationDate < currentDate) {
+        dispatch(logOut());
+      } else {
+        let userData = await AsyncStorage.getItem("userInfo");
+        userData = JSON.parse(userData);
+        await dispatch({ type: AUTO_LOGIN, payload: { tokenId, userId } });
+        await dispatch({ type: ADD_USER_SUCCESS, payload: userData });
+      }
     } catch (error) {
       throw new error();
     }
@@ -71,8 +84,12 @@ export const signUpUser = (authInfo, userInfo) => {
       );
       const authRes = await response.json();
       if (!authRes.error) {
+        const expirationDate = new Date(
+          new Date().getTime() + authRes.expiresIn * 1000
+        );
         await AsyncStorage.setItem("userId", authRes.localId);
         await AsyncStorage.setItem("tokenId", authRes.idToken);
+        await AsyncStorage.setItem("expirationDate", expirationDate.toString());
         dispatch({ type: SIGNIN_SUCCESS, payload: authRes });
         dispatch(addUser(userInfo, authRes.localId));
       } else dispatch({ type: SIGNIN_FAIL, payload: authRes.error });

@@ -7,6 +7,7 @@ import {
   ADD_USER_SUCCESS,
 } from "../actions/authActions";
 import stateUpdate from "../../utils/stateUpdate";
+import { UPDATE_PROFILE_SUCCESS } from "../actions/profileUpdateActions";
 
 const initialState = {
   loading: false,
@@ -40,6 +41,8 @@ const authReducer = (state = initialState, action) => {
       return stateUpdate(state, {
         userData: action.payload,
       });
+    case UPDATE_PROFILE_SUCCESS:
+      return stateUpdate(state, { userData: action.payload });
     default:
       return state;
   }

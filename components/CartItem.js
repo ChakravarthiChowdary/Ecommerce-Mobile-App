@@ -26,15 +26,11 @@ const CartItem = ({ cartProduct }) => {
           style={styles.image}
         />
         <View>
-          <Text style={{ fontFamily: "RobotoBold", marginLeft: 10 }}>
-            {cartProduct.title}
-          </Text>
-          <Text style={{ fontFamily: "RobotoBold", marginLeft: 10 }}>
+          <Text style={styles.cartText}>{cartProduct.title}</Text>
+          <Text style={styles.cartText}>
             Price : ₹{cartProduct.sellingprice}/-
           </Text>
-          <Text style={{ fontFamily: "RobotoBold", marginLeft: 10 }}>
-            Quantity : {cartProduct.quantity}
-          </Text>
+          <Text style={styles.cartText}>Quantity : {cartProduct.quantity}</Text>
         </View>
       </View>
       <Ionicons
@@ -62,6 +58,7 @@ const styles = StyleSheet.create({
     height: 70,
     width: 70,
   },
+  cartText: { fontFamily: "RobotoBold", marginLeft: 10 },
 });
 
 export default CartItem;
