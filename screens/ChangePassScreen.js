@@ -40,6 +40,7 @@ const ChangePassScreen = ({ route, navigation }) => {
       } else if (password !== confirmPassword) {
         setError("Confirm password is not same as new password!");
       } else {
+        Keyboard.dismiss();
         Alert.alert(
           "Confirm",
           "Changing password leads logging you out",
